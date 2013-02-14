@@ -34,7 +34,7 @@ class Zend_Validate_Age extends Zend_Validate_Abstract {
 	/**
 	 * Validate that a personn is older/younger/equal to an age
 	 * Usage:<br>
-	 * $validate = new General_Validate_Age(13, General_Validate_Age::OLDER_OR_EQUAL);
+	 * $validate = new Zend_Validate_Age(13, Zend_Validate_Age::OLDER_OR_EQUAL);
 	 * $validate->isValid('15/02/1974');
 	 * 
 	 * @param int $age Default = 18
