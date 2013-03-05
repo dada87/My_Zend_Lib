@@ -29,13 +29,13 @@ class Zend_Validate_Age extends Zend_Validate_Abstract {
 	private $__compare;
 	private $__date_ref;
 	protected $_messageTemplates = array(
-		self::MSG_INVALID_FORMAT => "'%value%' n'est pas reconnu comme une date valide.",
-		self::MSG_NOT_BORN => "La personne n'est pas née.",
-		self::MSG_NOT_EQUAL => "Le %dateref%, la personne née le '%value%' n'a pas %age% an(s).",
-		self::MSG_OLDER_THAN => "Le %dateref%, la personne née le '%value%' a plus de %age% an(s).",
-		self::MSG_OLDER_OR_EQUAL_THAN => "Le %dateref%, la personne née le '%value%' n'a pas moins de %age% an(s).",
-		self::MSG_YOUNGER_THAN => "Le %dateref%, la personne née le '%value%' a moins de %age% an(s).",
-		self::MSG_YOUNGER_OR_EQUAL_THAN => "Le %dateref%, la personne née le '%value%' n'a pas plus de de %age% an(s).",
+		self::MSG_INVALID_FORMAT => "'%value%' is not a valid date format.",
+		self::MSG_NOT_BORN => "The personn is not born.",
+		self::MSG_NOT_EQUAL => "The personn born on the '%value%' is not %age% year(s) old.",
+		self::MSG_OLDER_THAN => "The personn born on the '%value%' is older than %age% year(s) old.",
+		self::MSG_OLDER_OR_EQUAL_THAN => "The personn born on the '%value%' is no younger than %age% year(s) old.",
+		self::MSG_YOUNGER_THAN => "The personn born on the '%value%' is younger than %age% year(s) old.",
+		self::MSG_YOUNGER_OR_EQUAL_THAN => "The personn born on the '%value%' is no older than %age% year(s) old.",
 	);
 
 	/**
