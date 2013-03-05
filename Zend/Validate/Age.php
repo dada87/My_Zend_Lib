@@ -1,12 +1,12 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Contain the Zend_Validate_Age class
  */
 
 /**
- * Description of General_Validate_Url
+ * Zend_Validate_Age
+ * Validate that a date of birth gives an age older/younger/equal to a requested age.
  *
  * @author ddattee
  */
