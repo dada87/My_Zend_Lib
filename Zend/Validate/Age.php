@@ -1,12 +1,18 @@
 <?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
- * Description of Zend_Validate_Age
+ * Description of General_Validate_Url
  *
  * @author ddattee
  */
 class Zend_Validate_Age extends Zend_Validate_Abstract {
 
-  const EQUAL = 0;
+	const EQUAL = 0;
 	const OLDER_EXCLUSIF = 1;
 	const OLDER_OR_EQUAL = 2;
 	const YOUNGER_EXCLUSIF = -1;
@@ -21,28 +27,31 @@ class Zend_Validate_Age extends Zend_Validate_Abstract {
 
 	private $__age_ref;
 	private $__compare;
+	private $__date_ref;
 	protected $_messageTemplates = array(
-		self::MSG_INVALID_FORMAT => "'%value%' is not a valid date format.",
-		self::MSG_NOT_BORN => "The personn is not born.",
-		self::MSG_NOT_EQUAL => "The personn born on the '%value%' is not %age% year(s) old.",
-		self::MSG_OLDER_THAN => "The personn born on the '%value%' is older than %age% year(s) old.",
-		self::MSG_OLDER_OR_EQUAL_THAN => "The personn born on the '%value%' is no younger than %age% year(s) old.",
-		self::MSG_YOUNGER_THAN => "The personn born on the '%value%' is younger than %age% year(s) old.",
-		self::MSG_YOUNGER_OR_EQUAL_THAN => "The personn born on the '%value%' is no older than %age% year(s) old.",
+		self::MSG_INVALID_FORMAT => "'%value%' n'est pas reconnu comme une date valide.",
+		self::MSG_NOT_BORN => "La personne n'est pas née.",
+		self::MSG_NOT_EQUAL => "Le %dateref%, la personne née le '%value%' n'a pas %age% an(s).",
+		self::MSG_OLDER_THAN => "Le %dateref%, la personne née le '%value%' a plus de %age% an(s).",
+		self::MSG_OLDER_OR_EQUAL_THAN => "Le %dateref%, la personne née le '%value%' n'a pas moins de %age% an(s).",
+		self::MSG_YOUNGER_THAN => "Le %dateref%, la personne née le '%value%' a moins de %age% an(s).",
+		self::MSG_YOUNGER_OR_EQUAL_THAN => "Le %dateref%, la personne née le '%value%' n'a pas plus de de %age% an(s).",
 	);
 
 	/**
-	 * Validate that a personn is older/younger/equal to an age
+	 * Validate that a personn is older/younger/equal to an age at the date_ref given
 	 * Usage:<br>
-	 * $validate = new Zend_Validate_Age(13, Zend_Validate_Age::OLDER_OR_EQUAL);
+	 * $validate = new General_Validate_Age(13, General_Validate_Age::OLDER_OR_EQUAL);
 	 * $validate->isValid('15/02/1974');
 	 * 
 	 * @param int $age Default = 18
 	 * @param int $type Default = EQUAL
+	 * @param string $date_ref Default = today Must be a Zend_Date compatible date
 	 */
-	public function General_Validate_Age($age = 18, $type = self::EQUAL) {
-		$this->__age_ref = (int) $age;
+	public function General_Validate_Age($age = 18, $type = self::EQUAL, $date_ref = null) {
 		$this->__compare = (int) $type;
+		$this->__age_ref = (int) $age;
+		$this->__date_ref = new Zend_Date($date_ref);
 		foreach ($this->_messageTemplates as $key => $msg) {
 			$this->_messageTemplates[$key] = preg_replace('/%age%/', $this->__age_ref, $msg);
 		}
@@ -50,19 +59,19 @@ class Zend_Validate_Age extends Zend_Validate_Abstract {
 
 	/**
 	 * Vlaidate that the birthdate is more than 18ans year ago
-	 * @param string $value Must be a date detectable by zend date.
+	 * @param string $value Must be a Zend_Date compatible date
 	 * @return boolean
 	 */
 	public function isValid($value) {
 		if (!Zend_Date::isDate($value)) {
-			$this->_error(self::INVALID_FORMAT, $value);
+			$this->_error(self::MSG_INVALID_FORMAT, $value);
 			return false;
 		}
 
 		//To be sure calcul are right
 		Zend_Date::setOptions(array('format_type' => 'php'));
 
-		$today = new Zend_Date();
+		$today = $this->__date_ref;
 		$birthdate = new Zend_Date($value);
 		//Deduce the number of year
 		$age = $today->toString('Y') - $birthdate->toString('Y');
